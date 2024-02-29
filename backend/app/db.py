@@ -2,17 +2,21 @@ import oracledb
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+import os
+from dotenv import load_dotenv
 
 
 d = r"C:\oracle\instantclient_21_13"
 oracledb.init_oracle_client(lib_dir=d)
 
+load_dotenv()
+
 # Database connection details
-USERNAME = 'mesapuser'
-PASSWORD = 'dev123'
-HOST = '10.145.2.234'
-PORT = 1521
-SERVICE_NAME = 'MESDEV1A.sailbsp.com'
+USERNAME = os.environ.get("DB_USERNAME")
+PASSWORD = os.environ.get("DB_PASSWORD")
+HOST = os.environ.get("HOST")
+PORT = os.environ.get("PORT")
+SERVICE_NAME = os.environ.get("SERVICE_NAME")
 
 # Use oracledb to establish connection
 dsn = f"{USERNAME}/{PASSWORD}@{HOST}:{PORT}/{SERVICE_NAME}"
