@@ -1,22 +1,12 @@
-import { useState } from 'react'
+import CurrentSchedule from './pages/CurrentSchedule';
 
 
-function App() {
-  const [count, setCount] = useState(0)
-
+export default function App() {
   return (
-    <>
-      <div className='text-amber-600 text-7xl font-bold'>Vite + React</div>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-    </>
+    <div className='p-2 pl-2.5'>
+      <div className='text-slate-800 text-2xl font-bold tracking-[2px]'>SMS Schedule Monitoring</div>
+        <CurrentSchedule />
+    </div>
   )
 }
 
-export default App
