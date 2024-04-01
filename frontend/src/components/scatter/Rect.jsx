@@ -1,15 +1,15 @@
 import { Scatter, LabelList } from 'recharts';
 
 
-export default function Rect({ type, rectColor }) {
+export default function Rect({ typeArr, rectColor }) {
     return (
         <Scatter
-            data={type}
+            data={typeArr}
             shape={(props) => {
                 return (
                     <rect
                         x={props.cx}
-                        y={props.cy}
+                        y={props.cy + 4.5}
                         fill={rectColor}
                         width={
                             props.xAxis.scale(props.payload.end_datetime) -
@@ -28,7 +28,7 @@ export default function Rect({ type, rectColor }) {
                 dataKey="product.id"
                 position="center"
                 dx={100}
-                dy={9}
+                dy={13}
                 fill='#f9fafb'
                 style={{
                     fontSize: "15px",

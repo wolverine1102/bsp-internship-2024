@@ -16,8 +16,9 @@ export default function CustomizedXAxis({ key }) {
       orientation="top"
       type="number"
       allowDataOverflow={true}
-      domain={[startTime.valueOf(), endTime.valueOf()]}
+      domain={[startTime.getTime(), endTime.getTime()]}
       ticks={xTicks}
+      scale={"time"}
       interval={0}
       tickFormatter={xTicksFormat}
       tick={{

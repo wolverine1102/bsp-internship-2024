@@ -40,11 +40,14 @@ export default function CustomizedYAxis({ key }) {
         fontSize: "13px",
         letterSpacing: "1px",
         fontWeight: 500,
-        dy: 10
+        dy: 12
       }}
       interval={0}
       dataKey={key}
       allowDuplicatedCategory={false}
+      padding={{
+        bottom: 12
+      }}
     >
       <Label
         value={"PROCESS"}
