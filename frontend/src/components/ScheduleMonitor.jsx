@@ -1,64 +1,66 @@
-import { BarChart, Bar, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { ScatterChart, CartesianGrid, ResponsiveContainer } from 'recharts';
+import { useState } from "react";
 import CustomizedXAxis from './axes/XAxis';
 import CustomizedYAxis from './axes/YAxis';
+import Rect from './scatter/Rect';
 
 
 function processData(rawData) {
+    let dataArr = rawData.map((p) => ({
+        product: {
+            id: p.product.id,
+            type: p.product.type
+        },
+        current_process: `${p.current_process.name} ${p.current_process.section}`,
+        start_datetime: new Date(p.start_datetime).valueOf(),
+        end_datetime: new Date(p.end_datetime).valueOf()
+    }))
 
+    return dataArr;
 }
 
 export default function ScheduleMonitor({ schedule }) {
-    const data = [
-        {
-            "product": {
-                "id": 123,
-                "type": "billet"
-            },
-            "current_process": "CONV A",
+    // const [bloom, setBloom]= useState([]);
+    // const [billet, setBillet] = useState([]);
 
-            "duration": [new Date("2024-03-27T08:30"), new Date("2024-03-27T15:45")]
-        },
-        {
-            "product": {
-                "id": 456,
-                "type": "bloom"
-            },
-            "current_process": "ARU 2",
+    // processData(schedule).forEach(p => {
+    //     p.product.type === 'billet' ? setBillet([...billet, p]) : setBloom([...bloom, p]);
+    // });
 
-            "duration": [new Date("2024-03-27T11:15"), new Date("2024-03-27T18:30")]
-        },
-        {
-            "product": {
-                "id": 111,
-                "type": "billet"
-            },
-            "current_process": "CONV A",
+    const processedSchedule = processData(schedule);
 
-            "duration": [new Date("2024-03-28T02:15"), new Date("2024-03-28T09:30")]
-        }
-    ]
+    const billet = processedSchedule.filter((p) => p.product.type === 'billet');
+    const bloom = processedSchedule.filter((p) => p.product.type === 'bloom');
 
     return (
-        <ResponsiveContainer width="100%" height="60%">
-            <BarChart
-                data={data}
-                layout="vertical"
-            >
+        <ResponsiveContainer width="100%" height="80%">
+            <ScatterChart>
                 <CartesianGrid
                     strokeDasharray="1 1"
-                   
                 />
                 {
-                    CustomizedXAxis()
+                    CustomizedXAxis({
+                        key: "start_datetime"
+                    })
                 }
                 {
-                    CustomizedYAxis()
+                    CustomizedYAxis({
+                        key: "current_process"
+                    })
                 }
-                <Bar
-                    dataKey="duration"
-                    barSize={35}
-                />
-            </BarChart>
-        </ResponsiveContainer>
+                {
+                    Rect({
+                        type: billet,
+                        rectColor: "#155e75"
+                    })
+                }
+                {
+                    Rect({
+                        type: bloom,
+                        rectColor: "#fbbf24"
+                    })
+                }
+            </ScatterChart>
+        </ResponsiveContainer >
     )
 }
