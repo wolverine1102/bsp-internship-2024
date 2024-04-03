@@ -22,9 +22,10 @@ export default function CustomizedXAxis({ key }) {
       interval={0}
       tickFormatter={xTicksFormat}
       tick={{
-        fontSize: "10px",
+        fontSize: "11px",
         fill: "#000000",
-        dx: 26,
+        dx: 37,
+        letterSpacing: "1px"
       }}
       tickMargin={8}
       dataKey={key}
