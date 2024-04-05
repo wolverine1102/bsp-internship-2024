@@ -32,7 +32,7 @@ export default function ScheduleMonitor({ schedule }) {
                 height={560}
             >
                 <CartesianGrid
-                    strokeDasharray="1 1"
+                    strokeDasharray="1 0"
                     width="2500px"
                 />
                 {
