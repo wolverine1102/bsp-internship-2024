@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect } from "react";
 import ScheduleMonitor from '../components/ScheduleMonitor';
-import CustomizedYAxis from '../assets/YAxis';
+import AuxiliaryYAxis from '../components/axes/AuxiliaryYAxis';
 
 
 const baseURL = "http://localhost:3000/schedule";
@@ -27,18 +27,13 @@ export default function CurrentSchedule() {
             ignore = true;
         })
     }, []);
-
-    const handleScroll = (e) => {
-        let yAxis = document.getElementsByClassName("recharts-yAxis")[0];
-        yAxis.style = "transform: translateX(" + e.target.scrollLeft + "px);";
-    }
-
+    
     return (
-        <div className='flex flex-row mt-5 w-full h-screen gap-x-0.5'>
-            <div className='w-[157px]'>
-                <CustomizedYAxis />
+        <div className='flex flex-row mt-6 w-full h-screen'>
+            <div className='shrink'>
+                <AuxiliaryYAxis />
             </div>
-            <div className='overflow-x-auto'>
+            <div className='overflow-x-auto shrink'>
                 <ScheduleMonitor
                     schedule={schedule}
                 />

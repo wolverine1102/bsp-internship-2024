@@ -33,7 +33,7 @@ export default function Rect({ typeArr, rectColor }) {
                 style={{
                     fontSize: "15px",
                     fontWeight: 700,
-                    letterSpacing: "1px"
+                    letterSpacing: "1px",
                 }}
             />
         </Scatter>

@@ -2,183 +2,183 @@
     "schedule": [
         {
             "product": {
-                "id": 735,
-                "type": "billet"
-            },
-            "current_process": {
-                "name": "CONV",
-                "section": "C"
-            },
-            "start_date": "2024-04-03T08:15",
-            "end_date": "2024-04-03T13:45"
-        },
-        {
-            "product": {
-                "id": 162,
-                "type": "bloom"
-            },
-            "current_process": {
-                "name": "LF",
-                "section": 1
-            },
-            "start_date": "2024-04-03T15:30",
-            "end_date": "2024-04-03T20:10"
-        },
-        {
-            "product": {
-                "id": 488,
-                "type": "billet"
-            },
-            "current_process": {
-                "name": "ARU",
-                "section": 2
-            },
-            "start_date": "2024-04-03T09:45",
-            "end_date": "2024-04-03T14:20"
-        },
-        {
-            "product": {
-                "id": 829,
-                "type": "bloom"
-            },
-            "current_process": {
-                "name": "VAD",
-                "section": "VD"
-            },
-            "start_date": "2024-04-03T12:20",
-            "end_date": "2024-04-03T16:55"
-        },
-        {
-            "product": {
-                "id": 247,
-                "type": "billet"
-            },
-            "current_process": {
-                "name": "MC",
-                "section": 3
-            },
-            "start_date": "2024-04-03T18:00",
-            "end_date": "2024-04-04T00:30"
-        },
-        {
-            "product": {
-                "id": 593,
-                "type": "bloom"
-            },
-            "current_process": {
-                "name": "RH",
-                "section": 2
-            },
-            "start_date": "2024-04-03T03:45",
-            "end_date": "2024-04-03T08:10"
-        },
-        {
-            "product": {
-                "id": 331,
+                "id": 746,
                 "type": "billet"
             },
             "current_process": {
                 "name": "CONV",
                 "section": "B"
             },
-            "start_date": "2024-04-03T10:30",
-            "end_date": "2024-04-03T15:20"
+            "start_date_time": "2024-04-05T07:30",
+            "end_date_time": "2024-04-05T12:45"
         },
         {
             "product": {
-                "id": 725,
+                "id": 501,
                 "type": "bloom"
             },
             "current_process": {
                 "name": "ARU",
-                "section": 3
+                "section": "3"
             },
-            "start_date": "2024-04-03T07:20",
-            "end_date": "2024-04-03T11:50"
+            "start_date_time": "2024-04-05T09:15",
+            "end_date_time": "2024-04-05T15:20"
         },
         {
             "product": {
-                "id": 119,
+                "id": 913,
                 "type": "billet"
             },
             "current_process": {
                 "name": "VAD",
                 "section": "VD"
             },
-            "start_date": "2024-04-03T16:15",
-            "end_date": "2024-04-03T21:45"
+            "start_date_time": "2024-04-05T12:00",
+            "end_date_time": "2024-04-05T17:30"
         },
         {
             "product": {
-                "id": 868,
+                "id": 202,
+                "type": "bloom"
+            },
+            "current_process": {
+                "name": "LF",
+                "section": "2"
+            },
+            "start_date_time": "2024-04-05T14:45",
+            "end_date_time": "2024-04-05T19:10"
+        },
+        {
+            "product": {
+                "id": 620,
+                "type": "billet"
+            },
+            "current_process": {
+                "name": "RH",
+                "section": "1"
+            },
+            "start_date_time": "2024-04-05T16:30",
+            "end_date_time": "2024-04-05T21:55"
+        },
+        {
+            "product": {
+                "id": 378,
                 "type": "bloom"
             },
             "current_process": {
                 "name": "MC",
-                "section": 1
+                "section": 5
             },
-            "start_date": "2024-04-03T22:30",
-            "end_date": "2024-04-04T03:00"
+            "start_date_time": "2024-04-05T18:20",
+            "end_date_time": "2024-04-05T23:40"
         },
         {
             "product": {
-                "id": 502,
-                "type": "billet"
-            },
-            "current_process": {
-                "name": "LF",
-                "section": 2
-            },
-            "start_date": "2024-04-03T05:40",
-            "end_date": "2024-04-03T10:15"
-        },
-        {
-            "product": {
-                "id": 676,
-                "type": "bloom"
-            },
-            "current_process": {
-                "name": "RH",
-                "section": 1
-            },
-            "start_date": "2024-04-03T13:10",
-            "end_date": "2024-04-03T17:35"
-        },
-        {
-            "product": {
-                "id": 359,
+                "id": 854,
                 "type": "billet"
             },
             "current_process": {
                 "name": "CONV",
                 "section": "A"
             },
-            "start_date": "2024-04-03T04:55",
-            "end_date": "2024-04-03T09:25"
+            "start_date_time": "2024-04-05T20:10",
+            "end_date_time": "2024-04-06T01:30"
         },
         {
             "product": {
-                "id": 894,
+                "id": 125,
                 "type": "bloom"
             },
             "current_process": {
                 "name": "ARU",
-                "section": 1
+                "section": "1"
             },
-            "start_date": "2024-04-03T20:00",
-            "end_date": "2024-04-04T00:30"
+            "start_date_time": "2024-04-05T22:00",
+            "end_date_time": "2024-04-06T03:20"
         },
         {
             "product": {
-                "id": 173,
+                "id": 957,
                 "type": "billet"
             },
             "current_process": {
-                "name": "MC",
-                "section": 5
+                "name": "VAD",
+                "section": "VD"
             },
-            "start_date": "2024-04-03T23:45",
-            "end_date": "2024-04-04T04:15"
+            "start_date_time": "2024-04-05T00:45",
+            "end_date_time": "2024-04-06T06:10"
+        },
+        {
+            "product": {
+                "id": 444,
+                "type": "bloom"
+            },
+            "current_process": {
+                "name": "LF",
+                "section": "1"
+            },
+            "start_date_time": "2024-04-06T02:30",
+            "end_date_time": "2024-04-06T07:45"
+        },
+        {
+            "product": {
+                "id": 779,
+                "type": "billet"
+            },
+            "current_process": {
+                "name": "RH",
+                "section": "2"
+            },
+            "start_date_time": "2024-04-06T04:15",
+            "end_date_time": "2024-04-06T09:30"
+        },
+        {
+            "product": {
+                "id": 269,
+                "type": "bloom"
+            },
+            "current_process": {
+                "name": "MC",
+                "section": 2
+            },
+            "start_date_time": "2024-04-06T06:00",
+            "end_date_time": "2024-04-06T11:20"
+        },
+        {
+            "product": {
+                "id": 583,
+                "type": "billet"
+            },
+            "current_process": {
+                "name": "CONV",
+                "section": "C"
+            },
+            "start_date_time": "2024-04-06T07:45",
+            "end_date_time": "2024-04-06T13:00"
+        },
+        {
+            "product": {
+                "id": 816,
+                "type": "bloom"
+            },
+            "current_process": {
+                "name": "ARU",
+                "section": "2"
+            },
+            "start_date_time": "2024-04-06T09:30",
+            "end_date_time": "2024-04-06T14:40"
+        },
+        {
+            "product": {
+                "id": 357,
+                "type": "billet"
+            },
+            "current_process": {
+                "name": "VAD",
+                "section": "VD"
+            },
+            "start_date_time": "2024-04-06T11:15",
+            "end_date_time": "2024-04-06T16:25"
         }
     ]
 }

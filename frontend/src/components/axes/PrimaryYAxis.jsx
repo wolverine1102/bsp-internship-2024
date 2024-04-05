@@ -10,7 +10,7 @@ const process = [
   { stage: 'MC', section: ['1', '2', '3', '4', '5', '6'] },
 ];
 
-export default function CustomizedYAxis({ key }) {
+export default function PrimaryYAxis({ key }) {
   const yTicks = process.reduce((acc, current) => {
     const combinedSections = current.section.map(section => `${current.stage} ${section}`);
     acc.push(...combinedSections);
@@ -25,10 +25,11 @@ export default function CustomizedYAxis({ key }) {
       domain={yTicks}
       reversed={true}
       tick={{
-        fontSize: "13px",
+        fontSize: "14px",
         letterSpacing: "1px",
         fontWeight: 500,
         dy: 12,
+        fill: "#44403c",
       }}
       interval={0}
       dataKey={key}
@@ -47,7 +48,7 @@ export default function CustomizedYAxis({ key }) {
           fontSize: "15px",
           fill: "#334155",
           fontWeight: 780,
-          letterSpacing: "1px"
+          letterSpacing: "1px",
         }}
       />
     </YAxis>
