@@ -29,7 +29,7 @@ export default function CurrentSchedule() {
     }, []);
     
     return (
-        <div className='flex flex-row mt-6 w-full h-screen'>
+        <div className='flex flex-row mt-6 w-full h-full'>
             <div className='shrink'>
                 <AuxiliaryYAxis />
             </div>
