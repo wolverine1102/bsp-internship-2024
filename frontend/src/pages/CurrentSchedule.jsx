@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect } from "react";
 import ScheduleMonitor from '../components/ScheduleMonitor';
+import AuxiliaryYAxis from '../components/axes/AuxiliaryYAxis';
 
 
 const baseURL = "http://localhost:3000/schedule";
@@ -26,12 +27,17 @@ export default function CurrentSchedule() {
             ignore = true;
         })
     }, []);
-
+    
     return (
-        <div className='container-lg mx-auto my-5 w-screen h-screen overflow-x-scroll'>
-            <ScheduleMonitor
-                schedule={schedule}
-            />
+        <div className='flex flex-row mt-6 w-full h-full'>
+            <div className='shrink'>
+                <AuxiliaryYAxis />
+            </div>
+            <div className='overflow-x-auto shrink'>
+                <ScheduleMonitor
+                    schedule={schedule}
+                />
+            </div>
         </div>
     )
 }
