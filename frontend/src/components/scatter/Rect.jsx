@@ -9,30 +9,29 @@ export default function Rect({ typeArr, rectColor }) {
                 return (
                     <rect
                         x={props.cx}
-                        y={props.cy + 6.5}
+                        y={props.cy + 5.5}
                         fill={rectColor}
                         width={
-                            props.xAxis.scale(props.payload.end_datetime) -
-                            props.xAxis.scale(props.payload.start_datetime)
+                            props.xAxis.scale(props.payload.endDatetime) -
+                            props.xAxis.scale(props.payload.startDatetime)
                         }
-                        height={17}
+                        height={19}
                         style={{
                             stroke: "#d6d3d1",
-                            strokeWidth: 2,
+                            strokeWidth: 1,
                         }}
                     />
                 );
             }}
         >
             <LabelList
-                dataKey="product.id"
+                dataKey="product.heatNo"
                 position="center"
-                dx={100}
+                dx={85}
                 dy={15}
                 fill='#f9fafb'
                 style={{
-                    fontSize: "15px",
-                    fontWeight: 700,
+                    fontSize: "13px",
                     letterSpacing: "1px",
                 }}
             />

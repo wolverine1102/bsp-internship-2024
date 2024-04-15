@@ -8,12 +8,12 @@ import CustomTooltip from './scatter/CustomTooltip';
 function processData(rawData) {
     let dataArr = rawData.map((p) => ({
         product: {
-            id: p.product.id,
-            type: p.product.type
+            heatNo: p.heat_no.slice(-3),
+            // type: p.product.type
         },
-        current_process: `${p.current_process.name} ${p.current_process.section}`,
-        start_datetime: new Date(p.start_date_time).getTime(),
-        end_datetime: new Date(p.end_date_time).getTime()
+        currentProcess: `${p.current_process.name} ${p.current_process.section}`,
+        startDatetime: new Date(p.start_datetime).getTime(),
+        endDatetime: new Date(p.end_datetime).getTime()
     }))
 
     return dataArr;
@@ -22,13 +22,13 @@ function processData(rawData) {
 export default function ScheduleMonitor({ schedule }) {
     const processedSchedule = processData(schedule);
 
-    const billetArr = processedSchedule.filter((p) => p.product.type === 'billet');
-    const bloomArr = processedSchedule.filter((p) => p.product.type === 'bloom');
+    // const billetArr = processedSchedule.filter((p) => p.product.type === 'billet');
+    // const bloomArr = processedSchedule.filter((p) => p.product.type === 'bloom');
 
     return (
         <>
             <ScatterChart
-                width={1800}
+                width={7200}
                 height={560}
             >
                 <CartesianGrid
@@ -37,12 +37,12 @@ export default function ScheduleMonitor({ schedule }) {
                 />
                 {
                     CustomizedXAxis({
-                        key: "start_datetime"
+                        key: "startDatetime"
                     })
                 }
                 {
                     PrimaryYAxis({
-                        key: "current_process",
+                        key: "currentProcess",
                     })
                 }
                 <Tooltip
@@ -50,16 +50,16 @@ export default function ScheduleMonitor({ schedule }) {
                 />
                 {
                     Rect({
-                        typeArr: billetArr,
+                        typeArr: processedSchedule,
                         rectColor: "#155e75"
                     })
                 }
-                {
+                {/* {
                     Rect({
-                        typeArr: bloomArr,
+                        typeArr: processedSchedule,
                         rectColor: "#fbbf24"
                     })
-                }
+                } */}
             </ScatterChart>
         </>
     )
