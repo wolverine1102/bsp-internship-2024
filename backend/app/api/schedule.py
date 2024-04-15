@@ -82,23 +82,24 @@ def modify_data(rows: list):
     for row in rows:
         for row_index in range(1, 7):
             if row[row_index]:
-                schedule_dict = {
-                    "heat_no": row[0],
-                    "current_process": {
-                        "name": route_dict[row_index]["name"],
-                        "section": row[row_index],
-                    },
-                    "start_datetime": datetime.strptime(
-                        row[route_dict[row_index]["start_dtm_index"]], "%Y%m%d%H%M"
-                    ),
-                    "end_datetime": datetime.strptime(
-                        row[route_dict[row_index]["end_dtm_index"]], "%Y%m%d%H%M"
-                    ),
-                }
+                if row[route_dict[row_index]["end_dtm_index"]]:
+                    schedule_dict = {
+                        "heat_no": row[0],
+                        "current_process": {
+                            "name": route_dict[row_index]["name"],
+                            "section": row[row_index],
+                        },
+                        "start_datetime": str(datetime.strptime(
+                            row[route_dict[row_index]["start_dtm_index"]], "%Y%m%d%H%M"
+                        )),
+                        "end_datetime": str(datetime.strptime(
+                            row[route_dict[row_index]["end_dtm_index"]], "%Y%m%d%H%M"
+                        ))
+                    }
+
+                    schedule.append(schedule_dict)
             else:
                 continue
-
-            schedule.append(schedule_dict)
 
     return schedule
 
