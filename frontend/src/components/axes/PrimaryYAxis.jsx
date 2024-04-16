@@ -4,7 +4,7 @@ import { Label, YAxis } from 'recharts';
 const process = [
   { stage: 'CONV', section: ['A', 'B', 'C'] },
   { stage: 'ARU', section: ['1', '2', '3'] },
-  { stage: 'VAD', section: ['VD'] },
+  { stage: 'VAD', section: ['1'] },
   { stage: 'LF', section: ['1', '2'] },
   { stage: 'RH', section: ['1', '2'] },
   { stage: 'MC', section: ['1', '2', '3', '4', '5', '6'] },
