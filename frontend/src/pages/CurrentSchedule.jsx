@@ -4,8 +4,8 @@ import ScheduleMonitor from '../components/ScheduleMonitor';
 import AuxiliaryYAxis from '../components/axes/auxiliaryYAxis/AuxiliaryYAxis';
 
 
-// const baseURL = "http://127.0.0.1:8000/schedule/";  
-const baseURL = "http://localhost:3000/schedule";
+const baseURL = "http://127.0.0.1:8000/schedule/";  
+// const baseURL = "http://localhost:3000/schedule";
 
 export default function CurrentSchedule() {
     const [schedule, setSchedule] = useState([]);
@@ -18,7 +18,7 @@ export default function CurrentSchedule() {
                 setSchedule(response.data);
             }
             catch (error) {
-                // alert('Internal Server Error')
+                alert('Internal Server Error')
                 console.log(error);
             }
         }
