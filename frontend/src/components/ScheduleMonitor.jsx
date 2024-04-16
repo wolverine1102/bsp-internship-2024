@@ -28,7 +28,7 @@ export default function ScheduleMonitor({ schedule }) {
     return (
         <>
             <ScatterChart
-                width={7200}
+                width={8000}
                 height={560}
             >
                 <CartesianGrid
@@ -51,7 +51,7 @@ export default function ScheduleMonitor({ schedule }) {
                 {
                     Rect({
                         typeArr: processedSchedule,
-                        rectColor: "#155e75"
+                        rectColor: "#0e7490"
                     })
                 }
                 {/* {
