@@ -1,4 +1,4 @@
-fastapi
+fastapi==0.110.1
 uvicorn
 oracledb
 python-dotenv

@@ -94,10 +94,25 @@ def modify_data(rows: list):
                         )),
                         "end_datetime": str(datetime.strptime(
                             row[route_dict[row_index]["end_dtm_index"]], "%Y%m%d%H%M"
-                        ))
+                        )),
+                        "status" : "Completed"
                     }
-
-                    schedule.append(schedule_dict)
+                
+                else:
+                   schedule_dict = {
+                        "heat_no": row[0],
+                        "current_process": {
+                            "name": route_dict[row_index]["name"],
+                            "section": row[row_index],
+                        },
+                        "start_datetime": str(datetime.strptime(
+                            row[route_dict[row_index]["start_dtm_index"]], "%Y%m%d%H%M"
+                        )),
+                        "end_datetime": str(datetime.now()),
+                        "status" : "In Process"
+                    } 
+                   
+                schedule.append(schedule_dict)
             else:
                 continue
 
