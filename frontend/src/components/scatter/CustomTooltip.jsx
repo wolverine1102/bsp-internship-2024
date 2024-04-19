@@ -12,16 +12,17 @@ export default function CustomTooltip({ active, payload, label }) {
         })
 
         return (
-            <div className="custom-tooltip container border border-slate-400 rounded p-1 bg-slate-100 font-medium">
-                <p className="tracking-[1px] text-sm">{`Heat No : ${payload[0].payload.product.heatNo}`}</p>
-                <p className="tracking-[1px] text-sm">{`Stage : ${payload[0].payload.currentProcess}`}</p>
-                {/* <p className="tracking-[1px] text-sm capitalize">{`Type: ${payload[0].payload.product.type}`}</p> */}
-                <p className="tracking-[1px] text-sm">
+            <div className="custom-tooltip container border border-slate-400 rounded p-1 bg-slate-100 font-bold text-xs">
+                <p className="tracking-[1px]">{`Heat No : ${payload[0].payload.product.heatNo}`}</p>
+                <p className="tracking-[1px]">{`Stage : ${payload[0].payload.currentProcess}`}</p>
+                {/* <p className="tracking-[1px] capitalize">{`Type: ${payload[0].payload.product.type}`}</p> */}
+                <p className="tracking-[1px]">
                     {`Start: ${dateFormatter.format(start)}`}
                 </p>
-                <p className="tracking-[1px] text-sm">
+                <p className="tracking-[1px]">
                     {`End: ${dateFormatter.format(end)}`}
                 </p>
+                <p className="tracking-[1px]">{`Status : ${payload[0].payload.status}`}</p>
             </div>
         )
     }

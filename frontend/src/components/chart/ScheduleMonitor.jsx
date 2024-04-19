@@ -1,8 +1,8 @@
-import { ScatterChart, CartesianGrid, Tooltip, YAxis } from 'recharts';
-import CustomizedXAxis from './axes/XAxis';
-import PrimaryYAxis from './axes/PrimaryYAxis';
-import Rect from './scatter/Rect';
-import CustomTooltip from './scatter/CustomTooltip';
+import { ScatterChart, CartesianGrid, Tooltip } from 'recharts';
+import CustomizedXAxis from '../axes/XAxis';
+import PrimaryYAxis from '../axes/PrimaryYAxis';
+import Rect from '../scatter/Rect';
+import CustomTooltip from '../scatter/CustomTooltip';
 
 
 function processData(rawData) {
@@ -13,7 +13,8 @@ function processData(rawData) {
         },
         currentProcess: `${p.current_process.name} ${p.current_process.section}`,
         startDatetime: new Date(p.start_datetime).getTime(),
-        endDatetime: new Date(p.end_datetime).getTime()
+        endDatetime: new Date(p.end_datetime).getTime(),
+        status: p.status
     }))
 
     return dataArr;
@@ -25,10 +26,12 @@ export default function ScheduleMonitor({ schedule }) {
     // const billetArr = processedSchedule.filter((p) => p.product.type === 'billet');
     // const bloomArr = processedSchedule.filter((p) => p.product.type === 'bloom');
 
+    const completedArr = processedSchedule.filter((p) => p.status === 'Completed');
+    const inProgressArr = processedSchedule.filter((p) => p.status === 'In Process');
     return (
         <>
             <ScatterChart
-                width={8000}
+                width={5000}
                 height={560}
             >
                 <CartesianGrid
@@ -50,16 +53,16 @@ export default function ScheduleMonitor({ schedule }) {
                 />
                 {
                     Rect({
-                        typeArr: processedSchedule,
+                        typeArr: completedArr,
                         rectColor: "#0e7490"
                     })
                 }
-                {/* {
+                {
                     Rect({
-                        typeArr: processedSchedule,
-                        rectColor: "#fbbf24"
+                        typeArr: inProgressArr,
+                        rectColor: "#65a30d"
                     })
-                } */}
+                }
             </ScatterChart>
         </>
     )
