@@ -3,7 +3,8 @@ import { Scatter } from 'recharts';
 
 export default function Rect({ typeArr, rectColor }) {
     const renderCustomBar = (props) => {
-        let width = props.xAxis.scale(props.payload.endDatetime) - props.xAxis.scale(props.payload.startDatetime);
+        let endDatetimeScaling = new Date (props.payload.endDatetime + 5 * 60 * 1000).getTime(); // Add 10 mins to endDatetime
+        let width = (props.xAxis.scale(endDatetimeScaling) - props.xAxis.scale(props.payload.startDatetime));
 
         return (
             <svg>
@@ -19,7 +20,7 @@ export default function Rect({ typeArr, rectColor }) {
                     }}
                 />
                 <text x={props.cx + (width / 2)} y={props.cy + 19}
-                    fill='#fafafa' fontSize={"13px"} letterSpacing={"1px"} fontWeight={600}
+                    fill='#fafafa' fontSize={"11px"} letterSpacing={"1px"} fontWeight={700}
                     textAnchor={"middle"}
                 >
                     {`${props.payload.product.heatNo}`}

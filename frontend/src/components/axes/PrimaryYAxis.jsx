@@ -35,7 +35,7 @@ export default function PrimaryYAxis({ key }) {
       dataKey={key}
       allowDuplicatedCategory={false}
       padding={{
-        bottom: 12
+        bottom: 15
       }}
       hide={true}
     >
