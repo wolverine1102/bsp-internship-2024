@@ -3,7 +3,7 @@ import { Scatter } from 'recharts';
 
 export default function Rect({ typeArr, rectColor }) {
     const renderCustomBar = (props) => {
-        let endDatetimeScaling = new Date (props.payload.endDatetime + 5 * 60 * 1000).getTime(); // Add 10 mins to endDatetime
+        let endDatetimeScaling = new Date (props.payload.endDatetime + 5 * 60 * 1000).getTime(); // Add 5 mins to endDatetime
         let width = (props.xAxis.scale(endDatetimeScaling) - props.xAxis.scale(props.payload.startDatetime));
 
         return (
