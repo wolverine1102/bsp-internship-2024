@@ -20,14 +20,13 @@ function processData(rawData) {
     return dataArr;
 }
 
-export default function ScheduleMonitor({ schedule }) {
+export default function GnattChart({ schedule }) {
     const processedSchedule = processData(schedule);
-
-    // const billetArr = processedSchedule.filter((p) => p.product.type === 'billet');
-    // const bloomArr = processedSchedule.filter((p) => p.product.type === 'bloom');
 
     const completedArr = processedSchedule.filter((p) => p.status === 'Completed');
     const inProgressArr = processedSchedule.filter((p) => p.status === 'In Process');
+    const plannedArr = processedSchedule.filter((p) => p.status === 'Planned');
+
     return (
         <>
             <ScatterChart
@@ -54,13 +53,25 @@ export default function ScheduleMonitor({ schedule }) {
                 {
                     Rect({
                         typeArr: completedArr,
-                        rectColor: "#0e7490"
+                        rectColor: "#0e7490",
+                        opacity: 1.0,
+                        textFill: '#fafafa'
                     })
                 }
                 {
                     Rect({
                         typeArr: inProgressArr,
-                        rectColor: "#65a30d"
+                        rectColor: "#facc15",
+                        opacity: 1.0,
+                        textFill: '#fafafa'
+                    })
+                }
+                {
+                    Rect({
+                        typeArr: plannedArr,
+                        rectColor: "#a8a29e",
+                        opacity: 0.6,
+                        textFill: '#0f172a'
                     })
                 }
             </ScatterChart>
