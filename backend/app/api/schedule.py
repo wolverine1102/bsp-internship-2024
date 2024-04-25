@@ -41,6 +41,7 @@ def fetch_data_from_database():
         "RH_END_DTM",
         "CC_STR_DTM",
         "CC_END_DTM",
+        "PLAN_CC_NO",
     ]
 
     select_string = ""
@@ -82,37 +83,78 @@ def modify_data(rows: list):
     for row in rows:
         for row_index in range(1, 7):
             if row[row_index]:
-                if row[route_dict[row_index]["end_dtm_index"]]:
+                # TAPPING_STR_DTM is null
+                if row[route_dict[row_index]["start_dtm_index"]] is None:
+                    continue
+
+                # STR_DTM and END_DTM are available i.e process has been completed
+                elif row[route_dict[row_index]["end_dtm_index"]]:
                     schedule_dict = {
                         "heat_no": row[0],
                         "current_process": {
                             "name": route_dict[row_index]["name"],
                             "section": row[row_index],
                         },
-                        "start_datetime": str(datetime.strptime(
-                            row[route_dict[row_index]["start_dtm_index"]], "%Y%m%d%H%M"
-                        )),
-                        "end_datetime": str(datetime.strptime(
-                            row[route_dict[row_index]["end_dtm_index"]], "%Y%m%d%H%M"
-                        )),
-                        "status" : "Completed"
+                        "start_datetime": str(
+                            datetime.strptime(
+                                row[route_dict[row_index]["start_dtm_index"]],
+                                "%Y%m%d%H%M",
+                            )
+                        ),
+                        "end_datetime": str(
+                            datetime.strptime(
+                                row[route_dict[row_index]["end_dtm_index"]],
+                                "%Y%m%d%H%M",
+                            )
+                        ),
+                        "status": "Completed",
                     }
-                
+
+                # END_DTM is null i.e process is under way
                 else:
-                   schedule_dict = {
+                    schedule_dict = {
                         "heat_no": row[0],
                         "current_process": {
                             "name": route_dict[row_index]["name"],
                             "section": row[row_index],
                         },
-                        "start_datetime": str(datetime.strptime(
-                            row[route_dict[row_index]["start_dtm_index"]], "%Y%m%d%H%M"
-                        )),
+                        "start_datetime": str(
+                            datetime.strptime(
+                                row[route_dict[row_index]["start_dtm_index"]],
+                                "%Y%m%d%H%M",
+                            )
+                        ),
                         "end_datetime": str(datetime.now()),
-                        "status" : "In Process"
-                    } 
-                   
+                        "status": "In Process",
+                    }
+
                 schedule.append(schedule_dict)
+
+            # ACT_CC_NO is null
+            elif row_index == 6:
+                # Checking if AR_END_DTM is available
+                AR_END_DTM = row[route_dict[2]["end_dtm_index"]]
+                if AR_END_DTM:
+                    # Adding 2 hrs to AR_END_DTM
+                    planned_start_dtm = datetime.strptime(
+                        AR_END_DTM, "%Y%m%d%H%M"
+                    ) + timedelta(hours=2)
+
+                    planned_end_dtm = planned_start_dtm + timedelta(minutes=45)
+
+                    schedule_dict = {
+                        "heat_no": row[0],
+                        "current_process": {
+                            "name": route_dict[row_index]["name"],
+                            "section": row[-1],
+                        },
+                        "start_datetime": str(planned_start_dtm),
+                        "end_datetime": str(planned_end_dtm),
+                        "status": "Planned",
+                    }
+
+                    schedule.append(schedule_dict)
+
             else:
                 continue
 
@@ -120,7 +162,7 @@ def modify_data(rows: list):
 
 
 @router.get("/schedule/")
-async def index():
+async def get_schedule():
     rows = fetch_data_from_database()
     if rows:
         schedule = modify_data(rows)
