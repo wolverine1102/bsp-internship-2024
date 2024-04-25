@@ -3,8 +3,7 @@ import os
 from dotenv import load_dotenv
 
 
-d = r"C:\oracle\instantclient_21_13"
-oracledb.init_oracle_client(lib_dir=d)
+oracledb.init_oracle_client()
 
 load_dotenv()
 
