@@ -1,12 +1,12 @@
 import axios from 'axios';
 import { useState, useEffect } from "react";
-import ScheduleMonitor from '../components/chart/ScheduleMonitor';
+import GnattChart from '../components/chart/GnattChart';
 import AuxiliaryYAxis from '../components/axes/auxiliaryYAxis/AuxiliaryYAxis';
 
 
-const baseURL = "http://127.0.0.1:8000/schedule/";  
+const baseURL = "http://127.0.0.1:8082/schedule/";  
 
-export default function CurrentSchedule() {
+export default function ScheduleMonitor() {
     const [schedule, setSchedule] = useState([]);
 
     // You can set up an interval to fetch real-time updates if needed
@@ -39,7 +39,7 @@ export default function CurrentSchedule() {
                 <AuxiliaryYAxis />
             </div>
             <div className='overflow-x-auto shrink'>
-                <ScheduleMonitor
+                <GnattChart
                     schedule={schedule}
                 />
             </div>
