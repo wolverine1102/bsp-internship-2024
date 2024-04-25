@@ -1,12 +1,12 @@
 ### How to set up a virtual environment?
 ```
-python -m venv env
-env/Scripts/activate
+python3 -m venv env
+source env/bin/activate
 ```
 
 ### How to install libraries in the virtual environment?
 ```
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 # OR
 pip3 install --no-index wheels/*.whl
 ```
