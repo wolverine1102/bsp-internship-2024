@@ -8,7 +8,7 @@ import CustomTooltip from '../scatter/CustomTooltip';
 function processData(rawData) {
     let dataArr = rawData.map((p) => ({
         product: {
-            heatNo: p.heat_no.slice(-3),
+            heatNo: p.heat_no,
             // type: p.product.type
         },
         currentProcess: `${p.current_process.name} ${p.current_process.section}`,
