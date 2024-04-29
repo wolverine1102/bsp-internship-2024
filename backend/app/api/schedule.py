@@ -189,7 +189,7 @@ def modify_data(rows: list):
     return schedule
 
 
-@router.get("/schedule/")
+@router.get("/api/schedule/")
 async def get_schedule():
     rows = fetch_data_from_database()
     if rows:
