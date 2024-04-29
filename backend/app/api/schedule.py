@@ -79,6 +79,8 @@ def modify_data(rows: list):
         5: {"name": "RH", "start_dtm_index": 15, "end_dtm_index": 16},
         6: {"name": "MC", "start_dtm_index": 17, "end_dtm_index": 18},
     }
+    # Keeping track of maximum CC_END_DTM of each section in CC to avoid overlapping with START_DTM in "status: Planned"
+    CC_END_DTM_dict = {key: None for key in range(1, 7)}
 
     for row in rows:
         for row_index in range(1, 7):
@@ -130,6 +132,16 @@ def modify_data(rows: list):
 
                 schedule.append(schedule_dict)
 
+                # Populating CC_END_DTM_dict with the maximum END_DTM of each section in CC
+                if schedule_dict["current_process"]["name"] == "MC":
+                    CC_section = schedule_dict["current_process"]["section"]
+
+                    if CC_END_DTM_dict[CC_section]:
+                        if schedule_dict["end_datetime"] > CC_END_DTM_dict[CC_section]:
+                            CC_END_DTM_dict[CC_section] = schedule_dict["end_datetime"]
+                    else:
+                        CC_END_DTM_dict[CC_section] = schedule_dict["end_datetime"]
+
             # ACT_CC_NO is null
             elif row_index == 6:
                 # Checking if AR_END_DTM is available
@@ -140,13 +152,19 @@ def modify_data(rows: list):
                         AR_END_DTM, "%Y%m%d%H%M"
                     ) + timedelta(hours=2)
 
+                    CC_section = int(row[-1])
+
+                    # Planned STR_DTM is overlapping with CC_END_DTM
+                    if str(planned_start_dtm) < CC_END_DTM_dict[CC_section]:
+                        planned_start_dtm = planned_start_dtm + timedelta(minutes=45)
+
                     planned_end_dtm = planned_start_dtm + timedelta(minutes=45)
 
                     schedule_dict = {
                         "heat_no": row[0],
                         "current_process": {
                             "name": route_dict[row_index]["name"],
-                            "section": row[-1],
+                            "section": CC_section,
                         },
                         "start_datetime": str(planned_start_dtm),
                         "end_datetime": str(planned_end_dtm),
@@ -154,6 +172,16 @@ def modify_data(rows: list):
                     }
 
                     schedule.append(schedule_dict)
+
+                    # Populating CC_END_DTM_dict with the maximum END_DTM of each section in CC
+                    if schedule_dict["current_process"]["name"] == "MC":
+                        CC_section = schedule_dict["current_process"]["section"]
+
+                        if CC_END_DTM_dict[CC_section]:
+                            if schedule_dict["end_datetime"] > CC_END_DTM_dict[CC_section]:
+                                CC_END_DTM_dict[CC_section] = schedule_dict["end_datetime"]
+                        else:
+                            CC_END_DTM_dict[CC_section] = schedule_dict["end_datetime"]
 
             else:
                 continue
