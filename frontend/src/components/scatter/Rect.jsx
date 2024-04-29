@@ -24,7 +24,7 @@ export default function Rect({ typeArr, rectColor, opacity, textFill }) {
                     fill={textFill} fontSize={"11px"} letterSpacing={"1px"} fontWeight={700}
                     textAnchor={"middle"}
                 >
-                    {`${props.payload.product.heatNo}`}
+                    {`${props.payload.product.heatNo.slice(-3)}`}
                 </text>
             </svg>
         )
