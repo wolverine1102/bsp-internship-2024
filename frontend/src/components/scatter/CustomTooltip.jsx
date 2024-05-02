@@ -13,9 +13,8 @@ export default function CustomTooltip({ active, payload, label }) {
 
         return (
             <div className="custom-tooltip container border border-slate-400 rounded p-1 bg-slate-100 font-bold text-xs">
-                <p className="tracking-[1px]">{`Heat No : ${payload[0].payload.product.heatNo}`}</p>
+                <p className="tracking-[1px]">{`Heat No : ${payload[0].payload.heatNo}`}</p>
                 <p className="tracking-[1px]">{`Stage : ${payload[0].payload.currentProcess}`}</p>
-                {/* <p className="tracking-[1px] capitalize">{`Type: ${payload[0].payload.product.type}`}</p> */}
                 <p className="tracking-[1px]">
                     {`Start: ${dateFormatter.format(start)}`}
                 </p>
