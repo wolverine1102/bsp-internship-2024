@@ -58,8 +58,9 @@ def fetch_data_from_database():
         cursor = connection.cursor()
         cursor.execute(
             f"""SELECT {select_string} 
-                       FROM VW_SMS_HEAT 
-                       WHERE blow_str_dtm > {start_dtm} AND blow_str_dtm < {end_dtm}"""
+                FROM VW_SMS_HEAT 
+                WHERE blow_str_dtm > {start_dtm} AND blow_str_dtm < {end_dtm}
+                ORDER BY HEAT_NO"""
         )
         rows = cursor.fetchall()
 
@@ -80,7 +81,7 @@ def modify_data(rows: list):
         6: {"name": "MC", "start_dtm_index": 17, "end_dtm_index": 18},
     }
     # Keeping track of maximum CC_END_DTM of each section in CC to avoid overlapping with START_DTM in "status: Planned"
-    CC_END_DTM_dict = {key: None for key in range(1, 7)}
+    CC_END_DTM_dict = {str(key): "" for key in range(1, 7)}
 
     for row in rows:
         for row_index in range(1, 7):
@@ -88,6 +89,7 @@ def modify_data(rows: list):
                 # TAPPING_STR_DTM is null
                 if row[route_dict[row_index]["start_dtm_index"]] is None:
                     continue
+
 
                 # STR_DTM and END_DTM are available i.e process has been completed
                 elif row[route_dict[row_index]["end_dtm_index"]]:
@@ -114,6 +116,8 @@ def modify_data(rows: list):
 
                 # END_DTM is null i.e process is under way
                 else:
+                    end_dtm = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
                     schedule_dict = {
                         "heat_no": row[0],
                         "current_process": {
@@ -126,7 +130,7 @@ def modify_data(rows: list):
                                 "%Y%m%d%H%M",
                             )
                         ),
-                        "end_datetime": str(datetime.now()),
+                        "end_datetime": end_dtm,
                         "status": "In Process",
                     }
 
@@ -142,7 +146,8 @@ def modify_data(rows: list):
                     else:
                         CC_END_DTM_dict[CC_section] = schedule_dict["end_datetime"]
 
-            # ACT_CC_NO is null
+
+            # ACT_CC_NO is null i.e process for CC is planned
             elif row_index == 6:
                 # Checking if AR_END_DTM is available
                 AR_END_DTM = row[route_dict[2]["end_dtm_index"]]
@@ -152,11 +157,7 @@ def modify_data(rows: list):
                         AR_END_DTM, "%Y%m%d%H%M"
                     ) + timedelta(hours=2)
 
-                    CC_section = int(row[-1])
-
-                    # Planned STR_DTM is overlapping with CC_END_DTM
-                    if str(planned_start_dtm) < CC_END_DTM_dict[CC_section]:
-                        planned_start_dtm = planned_start_dtm + timedelta(minutes=45)
+                    CC_section = row[-1]
 
                     planned_end_dtm = planned_start_dtm + timedelta(minutes=45)
 
@@ -173,19 +174,28 @@ def modify_data(rows: list):
 
                     schedule.append(schedule_dict)
 
-                    # Populating CC_END_DTM_dict with the maximum END_DTM of each section in CC
-                    if schedule_dict["current_process"]["name"] == "MC":
-                        CC_section = schedule_dict["current_process"]["section"]
-
-                        if CC_END_DTM_dict[CC_section]:
-                            if schedule_dict["end_datetime"] > CC_END_DTM_dict[CC_section]:
-                                CC_END_DTM_dict[CC_section] = schedule_dict["end_datetime"]
-                        else:
-                            CC_END_DTM_dict[CC_section] = schedule_dict["end_datetime"]
-
             else:
                 continue
 
+    
+    # Updating STR_DTM of planned processes according to CC_END_DTM_dict
+    for process in schedule:
+        if process["status"] == "Planned":
+            CC_section = process["current_process"]["section"]
+
+            if process["start_datetime"] <= CC_END_DTM_dict[CC_section]:
+                planned_start_dtm = datetime.strptime(
+                            CC_END_DTM_dict[CC_section], "%Y-%m-%d %H:%M:%S"
+                        ) + timedelta(minutes=15)
+                
+                planned_end_dtm = planned_start_dtm + timedelta(minutes=45)
+
+                process["start_datetime"] = str(planned_start_dtm)
+                process["end_datetime"] = str(planned_end_dtm)
+
+                CC_END_DTM_dict[CC_section] = process["end_datetime"]
+                
+    
     return schedule
 
 

@@ -4,7 +4,7 @@ import GnattChart from '../components/chart/GnattChart';
 import AuxiliaryYAxis from '../components/axes/auxiliaryYAxis/AuxiliaryYAxis';
 
 
-const baseURL = "http://10.145.8.23/schedule/";
+const baseURL = "http://10.145.15.79:8080/api/schedule/";
 
 export default function ScheduleMonitor() {
     const [schedule, setSchedule] = useState([]);
