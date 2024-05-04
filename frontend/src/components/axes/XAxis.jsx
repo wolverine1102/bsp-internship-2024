@@ -24,7 +24,7 @@ export default function CustomizedXAxis({ key }) {
       tick={{
         fontSize: "11px",
         fill: "#000000",
-        dx: 100,
+        dx: 75,
         letterSpacing: "2px",
         fontWeight: 700
       }}
