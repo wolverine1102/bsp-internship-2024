@@ -22,26 +22,31 @@ def fetch_data_from_database():
     )
 
     fields = [
-        "HEAT_NO",
-        "ACT_CN_NO",
-        "ACT_AR_NO",
-        "ACT_VA_NO",
-        "ACT_LF_NO",
-        "ACT_RH_NO",
-        "ACT_CC_NO",
-        "TAPPING_STR_DTM",
-        "TAPPING_END_DTM",
-        "AR_STR_DTM",
-        "AR_END_DTM",
-        "VA_STR_DTM",
-        "VA_END_DTM",
-        "LF_STR_DTM",
-        "LF_END_DTM",
-        "RH_STR_DTM",
-        "RH_END_DTM",
-        "CC_STR_DTM",
-        "CC_END_DTM",
-        "PLAN_CC_NO",
+        "A.HEAT_NO",
+        "A.ACT_CN_NO",
+        "A.ACT_AR_NO",
+        "A.ACT_VA_NO",
+        "A.ACT_LF_NO",
+        "A.ACT_RH_NO",
+        "A.ACT_CC_NO",
+        "A.TAPPING_STR_DTM",
+        "A.TAPPING_END_DTM",
+        "A.AR_STR_DTM",
+        "A.AR_END_DTM",
+        "A.VA_STR_DTM",
+        "A.VA_END_DTM",
+        "A.LF_STR_DTM",
+        "A.LF_END_DTM",
+        "A.RH_STR_DTM",
+        "A.RH_END_DTM",
+        "A.CC_STR_DTM",
+        "A.CC_END_DTM",
+        "A.PLAN_CC_NO",  # index: -6
+        "NVL(A.FINAL_TAPPING_GRADE, A.AIM_TAPPING_GRADE) AS GRADE", # index: -5
+        "B.TUNDISH_NO", # index: -4
+        "B.TUNDISH_LIFE", # index: -3
+        "B.MOULD_NO", # index: -2
+        "B.MOULD_LIFE" # index: -1
     ]
 
     select_string = ""
@@ -57,10 +62,10 @@ def fetch_data_from_database():
     if connection:
         cursor = connection.cursor()
         cursor.execute(
-            f"""SELECT {select_string} 
-                FROM VW_SMS_HEAT 
-                WHERE blow_str_dtm > {start_dtm} AND blow_str_dtm < {end_dtm}
-                ORDER BY HEAT_NO"""
+            f"""SELECT {select_string}
+                FROM VW_SMS_HEAT A, VW_SMS_CC_RESULT B
+                WHERE A.HEAT_NO = B.HEAT_NO(+) AND A.BLOW_STR_DTM BETWEEN {start_dtm} AND {end_dtm}
+                ORDER BY A.HEAT_NO"""
         )
         rows = cursor.fetchall()
 
@@ -111,6 +116,11 @@ def modify_data(rows: list):
                                 "%Y%m%d%H%M",
                             )
                         ),
+                        "grade" : row[-5],
+                        "tundish_no" : row[-4],
+                        "tundish_life" : row[-3],
+                        "mould_no" : row[-2],
+                        "mould_life" : row[-1],
                         "status": "Completed",
                     }
 
@@ -131,6 +141,11 @@ def modify_data(rows: list):
                             )
                         ),
                         "end_datetime": end_dtm,
+                        "grade" : row[-5],
+                        "tundish_no" : row[-4],
+                        "tundish_life" : row[-3],
+                        "mould_no" : row[-2],
+                        "mould_life" : row[-1],
                         "status": "In Process",
                     }
 
@@ -157,7 +172,7 @@ def modify_data(rows: list):
                         AR_END_DTM, "%Y%m%d%H%M"
                     ) + timedelta(hours=2)
 
-                    CC_section = row[-1]
+                    CC_section = row[-6]
 
                     planned_end_dtm = planned_start_dtm + timedelta(minutes=45)
 
@@ -169,10 +184,16 @@ def modify_data(rows: list):
                         },
                         "start_datetime": str(planned_start_dtm),
                         "end_datetime": str(planned_end_dtm),
+                        "grade" : row[-5],
+                        "tundish_no" : row[-4],
+                        "tundish_life" : row[-3],
+                        "mould_no" : row[-2],
+                        "mould_life" : row[-1],
                         "status": "Planned",
                     }
 
                     schedule.append(schedule_dict)
+                    
 
             else:
                 continue
@@ -183,7 +204,7 @@ def modify_data(rows: list):
         if process["status"] == "Planned":
             CC_section = process["current_process"]["section"]
 
-            if process["start_datetime"] <= CC_END_DTM_dict[CC_section]:
+            if process["start_datetime"] < CC_END_DTM_dict[CC_section]:
                 planned_start_dtm = datetime.strptime(
                             CC_END_DTM_dict[CC_section], "%Y-%m-%d %H:%M:%S"
                         ) + timedelta(minutes=15)
@@ -193,7 +214,7 @@ def modify_data(rows: list):
                 process["start_datetime"] = str(planned_start_dtm)
                 process["end_datetime"] = str(planned_end_dtm)
 
-                CC_END_DTM_dict[CC_section] = process["end_datetime"]
+            CC_END_DTM_dict[CC_section] = process["end_datetime"]
                 
     
     return schedule
